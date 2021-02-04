@@ -1,0 +1,103 @@
+<template>
+    <div>
+        <div class="info">
+            <div class="img">
+                <div></div>
+            </div>
+            <div class="detail">
+                <h2>Bengal</h2>
+                <p>
+                    Bengals are a lot of fun to live with, but they're definitely not the cat for everyone, or for first-time cat owners. Extremely intelligent, curious and active, they demand a lot of interaction and woe betide the owner who doesn't provide it.
+                </p>
+                <div>
+                    <p><b>Temperament</b>: Alert, Agile, Energetic, Demanding, Intelligent</p>
+                    <p><b>Origin</b>: United States</p>
+                    <p><b>Life Span</b>: 12 - 15 years</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="other-photos">
+            <h3>Other photos</h3>
+            <div class="grid">
+                <div><div class="img"></div></div>
+                <div><div class="img"></div></div>
+                <div><div class="img"></div></div>
+                <div><div class="img"></div></div>
+                <div><div class="img"></div></div>
+                <div><div class="img"></div></div>
+                <div><div class="img"></div></div>
+                <div><div class="img"></div></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "InfoPage",
+    data: () => ({
+
+    }),
+}
+</script>
+
+<style lang="scss" scoped>
+.info {
+    padding: 2rem 5%;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    grid-row-gap: 2rem;
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+    .img {
+        div {
+            margin: auto;
+            width: 80%;
+            padding-top: 80%;
+            background-image: url('/resources/image1.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 3rem;
+        }
+    }
+    .detail {
+        h2 {
+            font-weight: bold;
+            color: #291507;
+        }
+        p {
+            color: #291507;
+        }
+    }
+}
+.other-photos {
+    h3 {
+        font-weight: bold;
+        color:  #291507;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        @media only screen and (max-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+        }
+        grid-gap: 2rem;
+        margin: 3rem 0 8rem;
+        div {
+            border-radius: 15%;
+            overflow: hidden;
+            .img {
+                width: 100%;
+                padding-top: 100%;
+                background-image: url('/resources/image2.png');
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        }
+    }
+}
+</style>

@@ -12,7 +12,8 @@ import * as VueRouter from 'vue-router'
 
 // Components
 import HomePage from '/src/pages/HomePage/HomePage.vue'
-import HelloWorld from '/src/components/HelloWorld.vue'
+import InfoPage from '/src/pages/InfoPage/InfoPage.vue'
+import MostSearched from '/src/pages/MostSearched/MostSearched.vue'
 
 // --------------
 
@@ -22,10 +23,13 @@ const app = createApp(App)
 // Create router
 const routes = [
     { path: '/', component: HomePage },
-    { path: '/hello', component: HelloWorld },
+    { path: '/info', component: InfoPage },
+    { path: '/most-searched', component: MostSearched },
+    { path: '/:pathMatch(.*)*', component: HomePage },
 ]
 const router = VueRouter.createRouter({
-    history: VueRouter.createWebHashHistory(),
+    mode: 'history',
+    history: VueRouter.createWebHistory(),
     routes,
 })
 app.use(router)

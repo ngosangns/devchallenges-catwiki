@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  app:
+    image: catwiki:latest
+    container_name: catwiki
+    build:
+      context: .
+    ports:
+      - 8082:8082
+      - 3000:3000
+    environment:
+      - PORT=8082
+      - APIKEY=525baec7-9a16-43c3-b114-bb50c35e3abd
+    volumes:
+      - ./:/go/src/app
