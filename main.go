@@ -26,5 +26,6 @@ func main() {
 	// Routes
 	e.GET("/*", handlers.Hello)
 	e.GET("/api", handlers.HelloAPI)
+	e.GET("/api/breeds", handlers.GetBreedsAPI)
 	go e.Logger.Fatal(e.Start(":" + port))
 }
