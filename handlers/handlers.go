@@ -33,3 +33,33 @@ func GetBreedsAPI(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, resp)
 }
+
+func GetBreedAPI(c echo.Context) error {
+	id := c.Param("id")
+	resp, err := libs.Get("https://api.thecatapi.com/v1/images/search?breed_ids=" + id)
+	if err != nil {
+		log.Fatalln(err)
+		return err
+	}
+	return c.JSON(http.StatusOK, resp)
+}
+
+func GetImageAPI(c echo.Context) error {
+	id := c.Param("id")
+	resp, err := libs.Get("https://api.thecatapi.com/v1/images/" + id)
+	if err != nil {
+		log.Fatalln(err)
+		return err
+	}
+	return c.JSON(http.StatusOK, resp)
+}
+
+func SearchAPI(c echo.Context) error {
+	q := c.QueryParam("q")
+	resp, err := libs.Get("https://api.thecatapi.com/v1/breeds/search?q=" + q)
+	if err != nil {
+		log.Fatalln(err)
+		return err
+	}
+	return c.JSON(http.StatusOK, resp)
+}

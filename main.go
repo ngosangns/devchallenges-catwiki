@@ -24,8 +24,11 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
+	e.GET("/api/breeds/", handlers.GetBreedsAPI)
+	e.GET("/api/breed/:id", handlers.GetBreedAPI)
+	e.GET("/api/search/", handlers.SearchAPI)
+	e.GET("/api/image/:id", handlers.GetImageAPI)
+	e.GET("/api/", handlers.HelloAPI)
 	e.GET("/*", handlers.Hello)
-	e.GET("/api", handlers.HelloAPI)
-	e.GET("/api/breeds", handlers.GetBreedsAPI)
 	go e.Logger.Fatal(e.Start(":" + port))
 }
