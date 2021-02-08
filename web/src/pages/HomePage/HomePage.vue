@@ -20,21 +20,13 @@
                 </div>
             </div>
             <div class="top-4">
-                <div class="card">
-                    <div class="img"></div>
-                    <h4 class="title">Bengal</h4>
+                <div class="card" v-for="i in top4" :key="i.id">
+                    <div class="img" :style="'background: url('+i.image.url+')'"></div>
+                    <h4 class="title">{{i.name}}</h4>
                 </div>
-                <div class="card">
+                <div class="card loading" v-for="i in 4" :key="i">
                     <div class="img"></div>
-                    <h4 class="title">Savannah</h4>
-                </div>
-                <div class="card">
-                    <div class="img"></div>
-                    <h4 class="title">Norwegian Forest Cat</h4>
-                </div>
-                <div class="card">
-                    <div class="img"></div>
-                    <h4 class="title">Selkirk Rex</h4>
+                    <h4 class="title"></h4>
                 </div>
             </div>
         </div>
@@ -55,8 +47,34 @@
     </div>
 </template>
 <script>
+import * as axios from "axios"
+
 export default {
     name: "HomePage",
+    data: () => ({
+        top4: [],
+    }),
+    methods: {
+        getTop4: function() {
+            axios.get("http://host.docker.internal:8082/api/breeds/", {responseType: 'json'})
+                .then((response) => {
+                    console.log(response)
+                    this.top4 = response.data.slice(0, 4)
+                    let loadingEl = document.querySelectorAll(".top-4 .loading")
+                    console.log(loadingEl)
+                    for(let el of loadingEl) {
+                        el.parentNode.removeChild(el);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+        },
+    },
+    created: function() {
+        this.getTop4()
+    },
+
 }
 </script>
 <style lang="scss" scoped>
@@ -147,8 +165,8 @@ export default {
             background-color: transparent;
             border: none;
             .img {
-                background: url("/resources/image1.png");
-                background-size: cover;
+                // background: url("/resources/image1.png");
+                background-size: cover!important;
                 width: 100%;
                 padding-top: 100%;
                 border-radius: 2vw;
@@ -161,8 +179,22 @@ export default {
                 margin-top: 1rem;
             }
         }
+        .loading {
+            .img {
+                background: #c0c0c0;
+                background: linear-gradient(to right, #c0c0c0 0%,#acacac 50%, #c0c0c0 100%);
+                animation: contentload 1.25s linear infinite;
+                animation-fill-mode: forwards;
+                background-size: 300% 100%;
+            }
+            @keyframes contentload {
+                0% {background-position: 0 0}
+                100% {background-position: -300% 0}
+            }
+        }
     }
 }
+
 .grid2 {
     padding: 5%;
     display: grid;
