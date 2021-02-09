@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"catwiki/libs"
+	"errors"
 	"log"
 	"net/http"
 	"os"
@@ -50,14 +51,20 @@ func GetBreedAPI(c echo.Context) error {
 
 	go chanGet("https://api.thecatapi.com/v1/images/search?breed_ids="+id, pipe)
 	go chanGet("https://api.thecatapi.com/v1/images/search?breed_ids="+id+"&limit=8", pipe)
-	ortherImages := <-pipe
+	otherImages := <-pipe
 	info := <-pipe
 
-	if info == "" || ortherImages == "" {
-		return c.JSON(http.StatusNotImplemented, nil)
+	if info == "" || otherImages == "" {
+		err := errors.New("No data")
+		log.Fatalln(err)
+		return err
 	}
 
-	return c.JSON(http.StatusOK, "{\"info\": "+info+", \"other_images\": "+ortherImages+"}")
+	if len(otherImages) < len(info) {
+		libs.SwapString(&otherImages, &info)
+	}
+
+	return c.JSON(http.StatusOK, "{\"info\": "+info+", \"other_images\": "+otherImages+"}")
 }
 
 func GetImageAPI(c echo.Context) error {

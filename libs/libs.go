@@ -13,3 +13,7 @@ func GetAPIKey() (string, error) {
 	}
 	return key, nil
 }
+
+func SwapString(str1, str2 *string) {
+	*str1, *str2 = *str2, *str1
+}

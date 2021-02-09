@@ -11,10 +11,10 @@
             margin: auto;
             width: 80%;
             padding-top: 80%;
-            // background-image: url('/resources/image1.png');
             background-size: cover;
             background-repeat: no-repeat;
             border-radius: 3rem;
+            background-position: center center;
         }
     }
     .detail {
@@ -51,6 +51,7 @@
                 background-image: url('/resources/image2.png');
                 background-repeat: no-repeat;
                 background-size: cover;
+                background-position: center center;
             }
         }
     }

@@ -86,6 +86,7 @@ h2.title {
                 width: 100%;
                 padding-top: 100%;
                 background-repeat: no-repeat;
+                background-position: center center;
                 background-size: cover;
                 border-radius: 10%;
             }
