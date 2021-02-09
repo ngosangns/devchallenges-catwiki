@@ -93,7 +93,7 @@ h2.title {
         .description {
             h3 {
                 font-weight: bold;
-                a: {
+                a {
                     color: #291507;
                     text-decoration: none;
                 }
