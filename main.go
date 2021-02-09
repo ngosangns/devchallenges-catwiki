@@ -37,5 +37,5 @@ func main() {
 	e.GET("/api/image/:id", handlers.GetImageAPI)
 	e.GET("/api/", handlers.HelloAPI)
 	e.GET("/*", handlers.Hello)
-	go e.Logger.Fatal(e.Start(":" + port))
+	e.Logger.Fatal(e.Start(":" + port))
 }
