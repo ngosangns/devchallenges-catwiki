@@ -7,7 +7,7 @@
                     <div :style="'background-image: url(\''+item.image.url+'\')'"></div>
                 </div>
                 <div class="description">
-                    <h3>{{item.name}}</h3>
+                    <h3><router-link :to="'/info/'+item.id">{{item.name}}</router-link></h3>
                     <p>{{item.description}}</p>
                 </div>
             </div>
@@ -93,6 +93,10 @@ h2.title {
         .description {
             h3 {
                 font-weight: bold;
+                a: {
+                    color: #291507;
+                    text-decoration: none;
+                }
             }
             color: #291507;
         }

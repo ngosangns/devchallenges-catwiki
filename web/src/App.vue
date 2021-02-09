@@ -2,12 +2,12 @@
 <div class="container">
   <div id="top">
       <router-link to="/">
-        <img src="/resources/CatWikiLogo.svg">
+        <img src="/resources/CatwikiLogo.svg">
       </router-link>
   </div>
   <router-view></router-view>
   <footer>
-    <img src="/resources/CatWikiLogo.svg">
+    <img src="/resources/CatwikiLogo.svg">
     <span>©ngosangns - devchallenge.io 2020</span>
   </footer>
 </div>
