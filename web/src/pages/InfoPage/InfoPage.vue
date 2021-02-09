@@ -1,103 +1,90 @@
 <template>
     <div>
-        <div class="info">
-            <div class="img">
-                <div></div>
+        <div v-if="!loading && value">
+            <div class="info">
+                <div class="img">
+                    <div :style="'background-image: url('+value.info.url+')'"></div>
+                </div>
+                <div class="detail">
+                    <h2>{{value.info.breeds[0].name}}</h2>
+                    <p>{{value.info.breeds[0].description}}</p>
+                    <div>
+                        <p><b>Temperament</b>: {{value.info.breeds[0].temperament}}</p>
+                        <p><b>Origin</b>: {{value.info.breeds[0].origin}}</p>
+                        <p><b>Life Span</b>: {{value.info.breeds[0].life_span}} years</p>
+                    </div>
+                </div>
             </div>
-            <div class="detail">
-                <h2>Bengal</h2>
-                <p>
-                    Bengals are a lot of fun to live with, but they're definitely not the cat for everyone, or for first-time cat owners. Extremely intelligent, curious and active, they demand a lot of interaction and woe betide the owner who doesn't provide it.
-                </p>
-                <div>
-                    <p><b>Temperament</b>: Alert, Agile, Energetic, Demanding, Intelligent</p>
-                    <p><b>Origin</b>: United States</p>
-                    <p><b>Life Span</b>: 12 - 15 years</p>
+
+            <div class="other-photos">
+                <h3>Other photos</h3>
+                <div class="grid">
+                    <div v-for="i in value.other_images" :key="i">
+                        <div class="img" :style="'background-image: url('+i.url+')'"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="other-photos">
-            <h3>Other photos</h3>
-            <div class="grid">
-                <div><div class="img"></div></div>
-                <div><div class="img"></div></div>
-                <div><div class="img"></div></div>
-                <div><div class="img"></div></div>
-                <div><div class="img"></div></div>
-                <div><div class="img"></div></div>
-                <div><div class="img"></div></div>
-                <div><div class="img"></div></div>
+        <!-- Loading -->
+        <div class="loading" v-if="loading">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
+        </div>
+        <!-- No data -->
+        <div class="loading" v-if="!loading && !value">
+            <div class="alert alert-danger" role="alert">
+                No data!
+            </div>
+        </div>
+
+        <!-- Toast with danger message -->
+        <div id="danger-toast" class="toast bg-danger"
+            role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                {{toast.message}}
+            </div>
+            <button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
     </div>
 </template>
 
 <script>
+import * as axios from 'axios'
+
 export default {
     name: "InfoPage",
+    props: ['id'],
     data: () => ({
-
+        loading: true,
+        value: null,
+        toast: {
+            obj: null,
+            message: null,
+        },
     }),
+    mounted: function() {
+        axios.get("http://host.docker.internal:8082/api/breeds/"+this.id, {responseType: 'json'})
+            .then((response) => {
+                if(response.data.info.length) {
+                    this.value = response.data
+                    this.value.info = this.value.info[0]
+                }
+                console.log(response.data)
+            })
+            .catch(() => {
+                this.toast.obj = new bootstrap.Toast(document.getElementById("danger-toast"))
+                this.toast.message = "Error while requesting"
+                this.toast.obj.show()
+            })
+            .finally(() => {
+                this.loading = false
+            })
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-.info {
-    padding: 2rem 5%;
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    grid-row-gap: 2rem;
-    @media only screen and (max-width: 768px) {
-        grid-template-columns: 1fr;
-    }
-    .img {
-        div {
-            margin: auto;
-            width: 80%;
-            padding-top: 80%;
-            background-image: url('/resources/image1.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            border-radius: 3rem;
-        }
-    }
-    .detail {
-        h2 {
-            font-weight: bold;
-            color: #291507;
-        }
-        p {
-            color: #291507;
-        }
-    }
-}
-.other-photos {
-    h3 {
-        font-weight: bold;
-        color:  #291507;
-    }
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        @media only screen and (max-width: 768px) {
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(4, 1fr);
-        }
-        grid-gap: 2rem;
-        margin: 3rem 0 8rem;
-        div {
-            border-radius: 15%;
-            overflow: hidden;
-            .img {
-                width: 100%;
-                padding-top: 100%;
-                background-image: url('/resources/image2.png');
-                background-repeat: no-repeat;
-                background-size: cover;
-            }
-        }
-    }
-}
+@import "./InfoPage.scss";
 </style>

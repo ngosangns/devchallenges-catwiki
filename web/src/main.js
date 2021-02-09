@@ -23,7 +23,7 @@ const app = createApp(App)
 // Create router
 const routes = [
     { path: '/', component: HomePage },
-    { path: '/info', component: InfoPage },
+    { path: '/info/:id', component: InfoPage, props: true },
     { path: '/most-searched', component: MostSearched },
     { path: '/:pathMatch(.*)*', component: HomePage },
 ]

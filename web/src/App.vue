@@ -33,6 +33,16 @@
     justify-content: start;
   }
 
+  #danger-toast {
+    display: flex;
+    align-items: center;
+    color: white;
+    border: 0;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+  }
+
   footer {
     background: black;
     border-radius: 3rem 3rem 0 0;

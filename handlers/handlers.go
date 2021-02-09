@@ -34,14 +34,30 @@ func GetBreedsAPI(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-func GetBreedAPI(c echo.Context) error {
-	id := c.Param("id")
-	resp, err := libs.Get("https://api.thecatapi.com/v1/images/search?breed_ids=" + id)
+func chanGet(url string, c chan string) {
+	resp, err := libs.Get(url)
 	if err != nil {
 		log.Fatalln(err)
-		return err
+		c <- ""
 	}
-	return c.JSON(http.StatusOK, resp)
+	c <- resp
+}
+
+// GetBreedAPI Hander for get breed by id
+func GetBreedAPI(c echo.Context) error {
+	id := c.Param("id")
+	pipe := make(chan string)
+
+	go chanGet("https://api.thecatapi.com/v1/images/search?breed_ids="+id, pipe)
+	go chanGet("https://api.thecatapi.com/v1/images/search?breed_ids="+id+"&limit=8", pipe)
+	ortherImages := <-pipe
+	info := <-pipe
+
+	if info == "" || ortherImages == "" {
+		return c.JSON(http.StatusNotImplemented, nil)
+	}
+
+	return c.JSON(http.StatusOK, "{\"info\": "+info+", \"other_images\": "+ortherImages+"}")
 }
 
 func GetImageAPI(c echo.Context) error {

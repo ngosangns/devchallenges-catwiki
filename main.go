@@ -32,7 +32,7 @@ func main() {
 
 	// Routes
 	e.GET("/api/breeds/", handlers.GetBreedsAPI)
-	e.GET("/api/breed/:id", handlers.GetBreedAPI)
+	e.GET("/api/breeds/:id", handlers.GetBreedAPI)
 	e.GET("/api/search/", handlers.SearchAPI)
 	e.GET("/api/image/:id", handlers.GetImageAPI)
 	e.GET("/api/", handlers.HelloAPI)
