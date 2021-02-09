@@ -65,7 +65,7 @@ export default {
         },
     }),
     mounted: function() {
-        axios.get("http://host.docker.internal:8082/api/breeds/"+this.id, {responseType: 'json'})
+        axios.get("/api/breeds/"+this.id, {responseType: 'json'})
             .then((response) => {
                 if(response.data.info.length) {
                     this.value = response.data

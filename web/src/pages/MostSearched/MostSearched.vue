@@ -48,7 +48,7 @@ export default {
     }),
     methods: {
         getTop10: function() {
-            axios.get("http://host.docker.internal:8082/api/breeds/", {responseType: 'json'})
+            axios.get("/api/breeds/", {responseType: 'json'})
                 .then((response) => {
                     this.list = response.data.slice(0, 10)
                     console.log(this.list)

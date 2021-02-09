@@ -151,7 +151,7 @@ export default {
     }),
     methods: {
         getTop4: function() {
-            axios.get("http://host.docker.internal:8082/api/breeds/", {responseType: 'json'})
+            axios.get("/api/breeds/", {responseType: 'json'})
                 .then((response) => {
                     this.top4 = response.data.slice(0, 4)
                 })
@@ -186,7 +186,7 @@ export default {
             // Search progress
             this.searchResults.display = true
             this.searchResults.loading = true
-            axios.get("http://host.docker.internal:8082/api/search/?q="+value, {responseType: 'json'})
+            axios.get("/api/search/?q="+value, {responseType: 'json'})
                 .then((response) => {
                     this.searchResults.values = response.data
                 })
